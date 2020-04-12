@@ -180,6 +180,7 @@ suspend fun restartRouter(ip: String, password: String) {
         try {
             log("Trying to restart router...")
             restartRouterInternal(ip, password)
+            log("No errors during router restart. Assuming restart was successful.")
             return
         } catch (e: Exception) {
             loge("Could not restart router! Reason:")
