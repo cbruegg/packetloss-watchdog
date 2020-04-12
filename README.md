@@ -39,7 +39,7 @@ PLWD_MEASUREMENT_DELAY_AFTER_RESTART_MS:         The duration to wait until meas
 ```
 
 ## Issues
-*This tool hasn't been tested thoroughly, so you may encounter bugs.* As I hope that Vodafone will eventually fix the issue so this workaround is no longer needed, not much effort was spent on writing clean code. However, if you stumble upon any issue, feel free to contribute a fix. If that's not possible, you may open an issue on GitHub, though I can't make any promises to fix it. Please prefer to [complain to Vodafone](http://twitter.com/vodafoneservice).
+**This tool hasn't been tested thoroughly, so you may encounter bugs.** As I hope that Vodafone will eventually fix the issue so this workaround is no longer needed, not much effort was spent on writing clean code. However, if you stumble upon any issue, feel free to contribute a fix. If that's not possible, you may open an issue on GitHub, though I can't make any promises to fix it. Please prefer to [complain to Vodafone](http://twitter.com/vodafoneservice).
 
 ## Registering the Tool as a Service
 If running on Linux (e.g. on a Raspberry Pi), I'd recommend to use the following template. Place it in `/etc/systemd/system/packetloss-watchdog.service`.
