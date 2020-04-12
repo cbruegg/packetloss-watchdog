@@ -43,9 +43,15 @@ val MeasurementDelayAfterRestartDefault = 30.toDuration(DurationUnit.MINUTES)
 
 @ExperimentalTime
 suspend fun main(args: Array<String>) {
-    if ("linux" !in System.getProperty("os.name").toLowerCase()) {
-        System.err.println("Only Linux is supported!")
-        return
+    val osName = System.getProperty("os.name").toLowerCase()
+    when {
+        "linux" in osName -> Unit
+        "win" in osName -> {
+            if (Runtime.getRuntime().exec("wsl echo test").inputStream.reader().readText().trim() != "test") {
+                return System.err.println("Windows is only supported if WSL is installed. Refer to https://docs.microsoft.com/de-de/windows/wsl/install-win10 for instructions.")
+            }
+        }
+        else -> return System.err.println("$osName is currently unsupported.")
     }
 
     if ("-h" in args) {
@@ -90,6 +96,10 @@ suspend fun main(args: Array<String>) {
     val measurementDelayAfterRestart =
         env["PLWD_MEASUREMENT_DELAY_AFTER_RESTART_MS"]?.toLongOrNull()?.toDuration(TimeUnit.MILLISECONDS)
             ?: MeasurementDelayAfterRestartDefault
+
+    if (measurementDuration < 1.seconds) {
+        return System.err.println("Measurement duration must be at least one second!")
+    }
 
     println(
         """
@@ -154,7 +164,7 @@ suspend fun Instant.delayUntil(verbose: Boolean) {
     }
 }
 
-val packetLossRegex = Regex.fromLiteral(".*?, ([0-9]+)% packet loss, .*?")
+val packetLossRegex = Regex(".*?, ([0-9]+)% packet loss, .*?")
 
 typealias ZeroToOne = Double
 
@@ -162,7 +172,14 @@ typealias ZeroToOne = Double
 suspend fun measurePacketLoss(pingTarget: String, measurementDuration: Duration): ZeroToOne {
     return withContext(Dispatchers.IO) {
         val durationSeconds = measurementDuration.inSeconds.roundToInt()
-        val packetLossMatch = ProcessBuilder("ping", "-i", "0.2", "-w", durationSeconds.toString(), pingTarget)
+
+        val osName = System.getProperty("os.name").toLowerCase()
+        val processBuilder = when {
+            "linux" in osName -> ProcessBuilder("ping", "-i", "0.2", "-w", durationSeconds.toString(), pingTarget)
+            "win" in osName -> ProcessBuilder("wsl", "ping", "-i", "0.2", "-w", durationSeconds.toString(), pingTarget)
+            else -> error("Unsupported OS!")
+        }
+        val packetLossMatch = processBuilder
             .redirectError(ProcessBuilder.Redirect.INHERIT)
             .start()
             .inputStream
