@@ -24,6 +24,7 @@ When the restart is due, the tool will connect to 192.168.0.1 with the supplied 
 ### Configuration Options
 
 ```
+Usage:
 -h: Print this message
 -v: Verbose output
 
@@ -36,6 +37,7 @@ PLWD_TOO_HIGH_THRESHOLD:                         If this packet loss value is ex
 PLWD_RESTART_TIME:                               The time of day at which the router should be restarted. (Defaults to 05:00)
 PLWD_CANCEL_PENDING_AFTER_NORMAL_MEASUREMENTS:   After this number of non-exceeding measurements, any pending router restart is canceled. (Defaults to 4)
 PLWD_MEASUREMENT_DELAY_AFTER_RESTART_MS:         The duration to wait until measurements should be resumed after a router restart. (Defaults to 30.0m)
+PLWD_MEASUREMENT_DURATION_MS:                    The duration of the packet loss measurement. (Defaults to 3m)
 ```
 
 ## Issues
