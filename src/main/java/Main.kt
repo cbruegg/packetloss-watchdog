@@ -70,6 +70,7 @@ suspend fun main(args: Array<String>) {
             PLWD_RESTART_TIME:                               The time of day at which the router should be restarted. (Defaults to $RestartTimeDefault)
             PLWD_CANCEL_PENDING_AFTER_NORMAL_MEASUREMENTS:   After this number of non-exceeding measurements, any pending router restart is canceled. (Defaults to $CancelPendingRestartAfterHowManyNormalMeasurementsDefault)
             PLWD_MEASUREMENT_DELAY_AFTER_RESTART_MS:         The duration to wait until measurements should be resumed after a router restart. (Defaults to $MeasurementDelayAfterRestartDefault)
+            PLWD_MEASUREMENT_DURATION_MS:                    The duration of the packet loss measurement. (Defaults to $MeasurementDurationDefault)
         """.trimIndent()
         )
         return
