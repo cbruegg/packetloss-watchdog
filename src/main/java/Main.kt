@@ -164,7 +164,7 @@ suspend fun Instant.delayUntil(verbose: Boolean) {
     }
 }
 
-val packetLossRegex = Regex(".*?, ([0-9]+)% packet loss, .*?")
+val packetLossRegex = Regex(""".*?, ([0-9]+(?:\.[0-9]+)?)% packet loss, .*?""")
 
 typealias ZeroToOne = Double
 
