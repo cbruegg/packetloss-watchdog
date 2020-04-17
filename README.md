@@ -3,6 +3,8 @@ With the rollout of DOCSIS 3.1, many users of the Vodafone Station supplied by V
 
 This tool continously monitors your connection's packet loss and restarts the Vodafone Station at any desired time.
 
+Please note that **only the Arris Vodafone Station is supported**. 
+
 ## Supported Systems
 
 The tool is written for the Java Virtual Machine but relies on the `ping` utility specific to Linux. Windows is supported if [WSL](https://docs.microsoft.com/de-de/windows/wsl/install-win10) is installed. Feel free to submit a PR to improve OS support. Personally, I'm running this tool on a Raspberry Pi.
