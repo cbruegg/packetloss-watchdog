@@ -116,6 +116,8 @@ suspend fun main(args: Array<String>) {
     """.trimIndent()
     )
 
+    checkForArrisModel(routerIp)
+
     var nextRestart: LocalDateTime? = null
     var normalMeasurementCount = 0
     while (true) {
@@ -399,6 +401,29 @@ class InsecureCookieJar : CookieJar {
     operator fun plusAssign(cookie: Cookie) {
         cookies += cookie.name to cookie
     }
+}
+
+suspend fun checkForArrisModel(ip: String) {
+    val base95xReq = Request.Builder().url("http://$ip/base_95x.js").build()
+    repeat(3) {
+        val response = try {
+            OkHttpClient().newCall(base95xReq).await()
+        } catch (e: IOException) {
+            null
+        }
+        if (response?.isSuccessful == true) {
+            return
+        } else {
+            delay(1000)
+        }
+    }
+    println(
+        """
+        
+        WARNING: Could not successfully verify whether your router's manufacturer is Arris.
+                 This may be due to connection problems or because your router is incompatible.
+                 """.trimIndent()
+    )
 }
 
 fun log(message: String) {
